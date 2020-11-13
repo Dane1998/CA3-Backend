@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 //Uncomment the line below, to temporarily disable this test
 @Disabled
 
-public class RenameMeResourceTest {
+public class JokesResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
@@ -59,47 +59,22 @@ public class RenameMeResourceTest {
         httpServer.shutdownNow();
     }
 
-    // Setup the DataBase (used by the test-server and this test) in a known state BEFORE EACH TEST
-    //TODO -- Make sure to change the EntityClass used below to use YOUR OWN (renamed) Entity class
-    @BeforeEach
-    public void setUp() {
-        EntityManager em = emf.createEntityManager();
-        r1 = new RenameMe("Some txt", "More text");
-        r2 = new RenameMe("aaa", "bbb");
-        try {
-            em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(r1);
-            em.persist(r2);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-    }
+    
 
     @Test
     public void testServerIsUp() {
-        given().when().get("/xxx").then().statusCode(200);
+        given().when().get("/jokes").then().statusCode(200);
     }
 
     //This test assumes the database contains two rows
     @Test
-    public void testDummyMsg() throws Exception {
+    public void testJokes() throws Exception {
         given()
                 .contentType("application/json")
-                .get("/xxx/").then()
+                .get("/jokes/").then()
                 .assertThat()
-                .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("msg", equalTo("Hello World"));
+                .statusCode(HttpStatus.OK_200.getStatusCode());
+               
     }
-
-    @Test
-    public void testCount() throws Exception {
-        given()
-                .contentType("application/json")
-                .get("/xxx/count").then()
-                .assertThat()
-                .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("count", equalTo(2));
-    }
+  
 }

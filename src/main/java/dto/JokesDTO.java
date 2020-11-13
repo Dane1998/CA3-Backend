@@ -6,21 +6,21 @@ package dto;
  *
  * @author Dane
  */
-public class OurDTO {
+public class JokesDTO {
     
     private String joke1;
     private String joke1Reference;
     private String joke2;
     private String joke2Reference;
 
-    public OurDTO(ChuckDTO chuckDTO, DadDTO dadDTO) {
+    public JokesDTO(ChuckDTO chuckDTO, DadDTO dadDTO) {
         this.joke1 = chuckDTO.getValue();
         this.joke1Reference = chuckDTO.getUrl();
         this.joke2 = dadDTO.getJoke();
         this.joke2Reference = dadDTO.getUrl();
     }
 
-    public OurDTO() {
+    public JokesDTO() {
     }
 
     public String getJoke1() {
